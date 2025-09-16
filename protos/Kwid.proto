@@ -1,0 +1,118 @@
+#VRML_SIM R2025a utf8
+# Describe the functionality of your PROTO here.
+
+
+PROTO Kwid [
+  field SFVec3f    translation     0 0 0.5
+  field SFRotation rotation        0 0 1 0
+  field SFString   name            "Kwid"
+  field SFString   controller      "kwid_controller"
+  field SFString   customData      ""
+  field SFBool     supervisor      FALSE
+  field SFBool     synchronization TRUE
+  field MFNode     bodySlot        []
+]
+{
+  Robot {
+    translation IS translation
+    rotation IS rotation
+    name IS name
+    controller IS controller
+    customData IS customData
+    supervisor IS supervisor
+    synchronization IS synchronization
+    children [
+      # Corpo Principal (Centro de Massa)
+      Transform {
+        translation 0 0 0
+        children [
+          Shape {
+            appearance PBRAppearance { baseColor 0.2 0.2 0.8 }
+            geometry Box { size 0.18 0.1 0.04 }
+          }
+        ]
+      }
+      
+      # Sensores no Centro de Massa
+      InertialUnit { name "imu" }
+      GPS { 
+        name "gps" 
+        accuracy 3.0
+        noise 0.5
+      }
+      Camera {
+        name "camera"
+        translation 0.09 0 0  # Na frente do corpo
+        width 640
+        height 480
+        fieldOfView 1.2
+      }
+
+      # Braço e Motor 1 (Frontal Direita)
+      Transform {
+        translation 0.09 0.09 0
+        rotation 0 0 1 0.785398 # 45 graus
+        children [
+          Shape {
+            appearance PBRAppearance { baseColor 0.7 0.7 0.7 }
+            geometry Box { size 0.12 0.02 0.02 }
+          }
+          RotationalMotor {
+            name "motor_fr"
+            maxVelocity 2000 # ~19000 RPM
+          }
+          # Hélice (apenas visual, a física será no controller)
+          Transform {
+            translation 0.06 0 0.015
+            children [
+              Shape {
+                appearance PBRAppearance { baseColor 0.1 0.1 0.1 }
+                geometry Cylinder { height 0.005 radius 0.0762 } # 6 polegadas = 0.1524m de diâmetro
+              }
+            ]
+          }
+        ]
+      }
+      
+      # Braço e Motor 2 (Traseira Esquerda)
+      Transform {
+        translation -0.09 -0.09 0
+        rotation 0 0 1 0.785398 # 45 graus
+        children [
+          Shape { appearance PBRAppearance { baseColor 0.7 0.7 0.7 } geometry Box { size 0.12 0.02 0.02 } }
+          RotationalMotor { name "motor_rl" maxVelocity 2000 }
+          Transform { translation -0.06 0 0.015 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.005 radius 0.0762 } } ] }
+        ]
+      }
+
+      # Braço e Motor 3 (Frontal Esquerda)
+      Transform {
+        translation 0.09 -0.09 0
+        rotation 0 0 1 -0.785398 # -45 graus
+        children [
+          Shape { appearance PBRAppearance { baseColor 0.7 0.7 0.7 } geometry Box { size 0.12 0.02 0.02 } }
+          RotationalMotor { name "motor_fl" maxVelocity 2000 }
+          Transform { translation 0.06 0 0.015 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.005 radius 0.0762 } } ] }
+        ]
+      }
+      
+      # Braço e Motor 4 (Traseira Direita)
+      Transform {
+        translation -0.09 0.09 0
+        rotation 0 0 1 -0.785398 # -45 graus
+        children [
+          Shape { appearance PBRAppearance { baseColor 0.7 0.7 0.7 } geometry Box { size 0.12 0.02 0.02 } }
+          RotationalMotor { name "motor_rr" maxVelocity 2000 }
+          Transform { translation -0.06 0 0.015 children [ Shape { appearance PBRAppearance { baseColor 0.1 0.1 0.1 } geometry Cylinder { height 0.005 radius 0.0762 } } ] }
+        ]
+      }
+    ]
+    physics Physics {
+      density -1
+      mass 0.75
+      inertiaMatrix [0.006, 0.006, 0.011, 0, 0, 0]
+      centerOfMass [0, 0, 0]
+      damping Damping { linear 0.2 angular 0.01 }
+    }
+  }
+}

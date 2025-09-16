@@ -1,0 +1,77 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/Floor.proto"
+EXTERNPROTO "../protos/Figuras.proto"
+EXTERNPROTO "../protos/Kwid.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.0003931146683558826 0.9999982525162368 0.0018276830497895708 0.4307998853006887
+  position -7.705856096420087 -0.4405146560475849 3.668262407058158
+}
+DEF solo_cascalhoso Floor {
+  translation 0 0 -0.1
+  rotation 0 0 1 1.5707963267948966
+  size 200 200
+  tileSize 1 1
+  appearance PBRAppearance {
+    baseColorMap ImageTexture {
+      url [
+        "https://github.com/cyberbotics/pit-escape-competition/blob/main/worlds/textures/fine_grained_sand.jpg?raw=true"
+      ]
+    }
+    roughness 1
+    metalness 0
+  }
+}
+Kwid {
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+  texture "noon_park_empty"
+}
+DEF arena_de_voo RectangleArena {
+  translation 0 0 -0.11
+  floorSize 10 10
+  floorAppearance Appearance {
+    texture ImageTexture {
+      url [
+        "https://github.com/cyberbotics/pit-escape-competition/blob/main/worlds/textures/fine_grained_sand.jpg?raw=true"
+      ]
+    }
+  }
+}
+Figuras {
+  name "Circulo"
+  translation -4.15731 -4.32731 -0.09
+}
+Figuras {
+  figuras "casa"
+  name "Casa"
+  translation -3.35156 3.21986 -0.09
+}
+Figuras {
+  figuras "cruz"
+  name "Cruz"
+  translation 1.1112 2.67357 -0.09
+}
+Figuras {
+  figuras "estrela"
+  name "Estrela"
+  translation 0.69999 -2.29344 -0.09
+}
+Figuras {
+  figuras "hexagono"
+  name "Hexagono"
+  translation 4.04397 0.33541 -0.09
+}
+Figuras {
+  figuras "pentagono"
+  name "Pentagono"
+  translation -3.01737 -1.13619 -0.09
+}

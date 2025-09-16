@@ -1,0 +1,48 @@
+#VRML_SIM R2025a utf8
+# Figura de papel em 80x80cm
+
+
+PROTO Figuras [
+  field SFString{"casa", "circulo", "cruz", "estrela", "hexagono", "pentagono", "quadrado", "triangulo"}
+                   figuras          "circulo"
+  field SFString   name            "Figuras"
+  field SFVec3f    translation     0. 0. 0.
+  field SFFloat    size            0.8
+]
+{
+%<
+// Setting object size constant
+const point_offset = fields.size.value / 2.;
+// Predefined color set
+const fig = fields.figuras.value;
+const fig_url = "assets/" + fig + ".png";
+>%
+  Solid {
+    translation IS translation
+    name IS name
+    children [
+      Shape {
+        appearance Appearance {
+          texture ImageTexture {
+            url [
+              "%<= fig_url >%"
+            ]
+          }
+        }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            %<= -point_offset >% %<= -point_offset >% 0
+            %<=  point_offset >% %<= -point_offset >% 0
+            %<=  point_offset >% %<=  point_offset >% 0
+            %<= -point_offset >% %<=  point_offset >% 0
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+    ]
+  }
+}
